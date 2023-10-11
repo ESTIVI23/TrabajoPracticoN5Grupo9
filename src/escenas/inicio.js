@@ -12,10 +12,14 @@ class inicio extends Phaser.Scene{
 
        
         this.load.image('fondo', '/public/imag/fondo.png'); // esta es la imagen de fondo
-       
+        this.load.spritesheet('bala','/public/imag/bala.png',{frameWidth:72,frameHeight:72});
         this.load.spritesheet('nave','/public/imag/nave.png', {frameWidth:70, frameHeight:62}); // la nave principal
       }
       create (){
+        this.balas = this.physics.add.group(); // Crea un grupo para las balas
+        this.barraespacio = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Configura la tecla espaciadoraaa
+
+
         this.add.image(400,400, 'fondo'); 
        
        
@@ -93,7 +97,10 @@ class inicio extends Phaser.Scene{
       }
 
 
-
+      if (Phaser.Input.Keyboard.JustDown(this.barraespacio)) { // Verifica si la tecla espaciadora se presionó en este fotograma
+        const bullet = this.balas.create(this.player.x,this.player.y, 'bala'); // Crea una bala en la posición del jugador
+        bullet.setVelocity(300, 0); // Establece la velocidad de la bala (en este caso, hacia arriba)
+    }
       }
 
 }
