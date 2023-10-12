@@ -9,22 +9,39 @@ class inicio extends Phaser.Scene{
       preload (){
 
         // es un metodo
-
+        //this.load.setBaseURL('https://labs.phaser.io');
        
         this.load.image('fondo', '/public/imag/fondo.png'); // esta es la imagen de fondo
         this.load.spritesheet('bala','/public/imag/bala.png',{frameWidth:72,frameHeight:72});
         this.load.spritesheet('nave','/public/imag/nave.png', {frameWidth:70, frameHeight:62}); // la nave principal
+        this.load.image('red', '/public/imag/red.png');
+
       }
       create (){
         this.balas = this.physics.add.group(); // Crea un grupo para las balas
-        this.barraespacio = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Configura la tecla espaciadoraaa
+        this.barraespacio = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K); // Configura la tecla espaciadoraaa
 
 
         this.add.image(400,400, 'fondo'); 
        
-       
+      
+
+
+
         this.player = this.physics.add.sprite(400,400, 'nave');
         this.player.setCollideWorldBounds(true); //no atravesar bordes del area de juego
+        
+          // son las particulas 
+          const particles = this.add.particles(-40,0, 'red', {
+            speed: 100,
+            angle:{min: 150, max :210},
+            scale: { start: 1.0, end: 0 },  // EL TAMAÑO DE LAS PARTICULAS """"""""""""""""""""""""""""""""""""
+            blendMode: 'ADD' // este agraga las particulas 
+  
+        });
+  
+        particles.startFollow(this.player); 
+        
       
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -80,12 +97,15 @@ class inicio extends Phaser.Scene{
 
       else if(this.cursors.up.isDown){
         this.player.setVelocityY(-160);
+        this.player.setVelocityX(0);
+
         
         this.player.anims.play('up', true);
        }
 
     else if(this.cursors.down.isDown){
       this.player.setVelocityY(160);
+      this.player.setVelocityX(0);
       
       this.player.anims.play('down', true);
   }

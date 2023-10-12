@@ -16,6 +16,6 @@ app.use('/src', express.static(__dirname +'/src'));
 app.use('/node_modules', express.static(__dirname+'/node_modules'));
 
 //configuarar server basico
-app.listen(5009, function(){
+app.listen(5007, function(){
     console.log("servidor CORRIENDO DE EL GRUPO 9 <-XD->")
 })
